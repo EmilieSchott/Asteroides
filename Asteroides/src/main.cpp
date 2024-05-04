@@ -8,6 +8,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Asteroides");
     auto spaceShip = SpaceShip(sf::Color::Yellow);
+    auto chrono = sf::Clock{};
 
     while(window.isOpen())
     {
@@ -17,10 +18,9 @@ int main()
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            if (event.type == sf::Event::KeyPressed) {
-                spaceShip.moveForward();
-            }
+            spaceShip.updateState(event);
         }
+        spaceShip.update(chrono.restart().asSeconds());
 
         window.clear();
         spaceShip.display(window);

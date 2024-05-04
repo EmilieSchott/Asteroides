@@ -3,7 +3,7 @@
 
 using namespace std;
 
-SpaceShip::SpaceShip(sf::Color color) {
+SpaceShip::SpaceShip(sf::Color const& color) {
 	if (!texture.loadFromFile("resources/images/spaceship.png")) {
 		cerr << "L'image du vaisseau n'a pas ete correctement chargee";
 	}
@@ -11,10 +11,22 @@ SpaceShip::SpaceShip(sf::Color color) {
 	sprite.setColor(color);
 }
 
-void SpaceShip::moveForward() {
-	sprite.move(10, 0);
+void SpaceShip::updateState(sf::Event const& event) {
+	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z ) {
+		accelerationInProgress = true;
+	} else if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Z) {
+		accelerationInProgress = false;
+	}
 }
 
-void SpaceShip::display(sf::RenderWindow& window) {
+void SpaceShip::update(float duration) {
+	if (accelerationInProgress) {
+		speed += ACCELERATION*duration;
+	}
+	speed -= speed * FRICTION_COEFFICIENT * duration;
+	sprite.move(speed*duration, 0);
+}
+
+void SpaceShip::display(sf::RenderWindow& window) const {
 	window.draw(sprite);
 }
