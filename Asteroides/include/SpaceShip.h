@@ -4,10 +4,12 @@
 
 class SpaceShip {
 	public:
+	SpaceShip(sf::Color color);
 	void moveForward();
 	void display(sf::RenderWindow& window);
 
 	private:
-		sf::CircleShape circle{30};
+		sf::Texture texture{};
+		sf::Sprite sprite{};
 };
 

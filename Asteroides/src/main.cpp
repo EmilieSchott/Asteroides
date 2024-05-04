@@ -7,9 +7,7 @@ using namespace std;
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Asteroides");
-    sf::CircleShape circle(100.f);
-    circle.setFillColor(sf::Color::Green);
-    auto spaceShip = SpaceShip{};
+    auto spaceShip = SpaceShip(sf::Color::Yellow);
 
     while(window.isOpen())
     {
@@ -24,8 +22,7 @@ int main()
             }
         }
 
-        window.clear(sf::Color::Blue);
-        window.draw(circle);
+        window.clear();
         spaceShip.display(window);
         window.display();
     }
