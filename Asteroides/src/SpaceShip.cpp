@@ -1,5 +1,7 @@
-#include "../include/SpaceShip.h"
 #include <iostream>
+#include "../include/SpaceShip.h"
+#include "../include/Vector.h"
+#include "../include/Coordinates.h"
 
 using namespace std;
 
@@ -9,22 +11,32 @@ SpaceShip::SpaceShip(sf::Color const& color) {
 	}
 	sprite.setTexture(texture);
 	sprite.setColor(color);
+	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+	sprite.setPosition(position.getX(), position.getY());
 }
 
-void SpaceShip::updateState(sf::Event const& event) {
-	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Z ) {
-		accelerationInProgress = true;
-	} else if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Z) {
-		accelerationInProgress = false;
-	}
+void SpaceShip::updateState() {
+	accelerationInProgress = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+	turnToRight = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+	turnToLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
 }
 
 void SpaceShip::update(float duration) {
-	if (accelerationInProgress) {
-		speed += ACCELERATION*duration;
+	if (accelerationInProgress == true) {
+		speed += Vector::createFromAngle(ACCELERATION * duration, sprite.getRotation());
 	}
 	speed -= speed * FRICTION_COEFFICIENT * duration;
-	sprite.move(speed*duration, 0);
+	auto movement = speed * duration;
+	position += movement;
+	sprite.setPosition(position.getX(), position.getY());
+	
+	if (turnToRight == true) {
+		sprite.rotate(- ANGULAR_VELOCITY * duration);
+	}
+
+	if (turnToLeft == true) {
+		sprite.rotate(ANGULAR_VELOCITY * duration);
+	}
 }
 
 void SpaceShip::display(sf::RenderWindow& window) const {
