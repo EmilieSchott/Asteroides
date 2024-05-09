@@ -5,14 +5,8 @@
 
 using namespace std;
 
-SpaceShip::SpaceShip(sf::Color const& color) {
-	if (!texture.loadFromFile("resources/images/spaceship.png")) {
-		cerr << "L'image du vaisseau n'a pas ete correctement chargee";
-	}
-	sprite.setTexture(texture);
+SpaceShip::SpaceShip(sf::Color const& color): SpaceElement("resources/images/spaceship.png") {
 	sprite.setColor(color);
-	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
-	sprite.setPosition(position.getX(), position.getY());
 }
 
 void SpaceShip::updateState() {
@@ -26,9 +20,7 @@ void SpaceShip::update(float duration) {
 		speed += Vector::createFromAngle(ACCELERATION * duration, sprite.getRotation());
 	}
 	speed -= speed * FRICTION_COEFFICIENT * duration;
-	auto movement = speed * duration;
-	position += movement;
-	sprite.setPosition(position.getX(), position.getY());
+	SpaceElement::update(duration);
 	
 	if (turnToRight == true) {
 		sprite.rotate(- ANGULAR_VELOCITY * duration);
@@ -39,6 +31,3 @@ void SpaceShip::update(float duration) {
 	}
 }
 
-void SpaceShip::display(sf::RenderWindow& window) const {
-	window.draw(sprite);
-}
