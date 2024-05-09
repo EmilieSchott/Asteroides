@@ -11,6 +11,8 @@ class Coordinates
 	float getX() const;
 	float getY() const;
 	void operator+=(Vector const& vector);
+	static float getSpaceWidth();
+	static float getSpaceHeight();
 
 	private:
 	float x{};

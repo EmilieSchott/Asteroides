@@ -34,6 +34,14 @@ float Coordinates::getY() const {
     return y;
 }
 
+float Coordinates::getSpaceWidth() {
+    return xLimit;
+}
+
+float Coordinates::getSpaceHeight() {
+    return yLimit;
+}
+
 void Coordinates::operator+=(Vector const& vector) {
     x += vector.x;
     y += vector.y;
