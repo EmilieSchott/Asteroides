@@ -1,7 +1,10 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <array>
+#include "../include/SpaceElement.h"
 #include "../include/SpaceShip.h"
 #include "../include/Coordinates.h"
+#include "../include/Asteroid.h"
 
 using namespace std;
 
@@ -13,23 +16,36 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Asteroides");
     Coordinates::initializeSpace(WINDOW_WIDTH, WINDOW_HEIGHT);
-    auto spaceShip = SpaceShip(SPACESHIP_COLOR);
+    auto spaceShip = SpaceShip{ SPACESHIP_COLOR };
+    auto asteroid = Asteroid{};
+    auto asteroid2 = Asteroid{};
+    auto asteroid3 = Asteroid{};
+    auto spaceElements = array<SpaceElement*, 4>{&asteroid, &asteroid2, &asteroid3, &spaceShip};
     auto chrono = sf::Clock{};
 
-    while(window.isOpen())
-    {
-        sf::Event event;
-        while(window.pollEvent(event))
-        {
+    while(window.isOpen()) {
+        auto event = sf::Event{};
+        while(window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
         }
         spaceShip.updateState();
-        spaceShip.update(chrono.restart().asSeconds());
+        auto loopTime = chrono.restart().asSeconds();
+        for (auto* spaceElement : spaceElements) {
+            spaceElement->update(loopTime);
+        }
+
+        for (auto* spaceElement : spaceElements) {
+            if (spaceElement != &spaceShip) {
+                spaceElement->testCollision(spaceShip);
+            }
+        }
 
         window.clear();
-        spaceShip.display(window);
+        for (auto *spaceElement : spaceElements) {
+            spaceElement->display(window);
+        }
         window.display();
     }
 

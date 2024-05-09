@@ -1,5 +1,9 @@
+#include <cmath>
+#include <algorithm>
 #include "../include/Coordinates.h"
 #include "../include/Vector.h"
+
+using namespace std;
 
 float Coordinates::xLimit = 0;
 float Coordinates::yLimit = 0;
@@ -8,9 +12,9 @@ Coordinates::Coordinates() : x{ xLimit / 2 }, y{ yLimit / 2 } {
 
 }
 
-Coordinates::Coordinates(int const& requestedX, int const& requestedY) {
-    x = static_cast<float>(requestedX);
-    y = static_cast<float>(requestedY);
+Coordinates::Coordinates(float const& requestedX, float const& requestedY) {
+    x = requestedX;
+    y = requestedY;
 
     if (x > xLimit) {
         x -= xLimit;
@@ -24,22 +28,6 @@ Coordinates::Coordinates(int const& requestedX, int const& requestedY) {
 void Coordinates::initializeSpace(int const& requestedXLimit, int const& requestedYLimit) {
     xLimit = static_cast<float>(requestedXLimit);
     yLimit = static_cast<float>(requestedYLimit);
-}
-
-float Coordinates::getX() const {
-    return x;
-}
-
-float Coordinates::getY() const {
-    return y;
-}
-
-float Coordinates::getSpaceWidth() {
-    return xLimit;
-}
-
-float Coordinates::getSpaceHeight() {
-    return yLimit;
 }
 
 void Coordinates::operator+=(Vector const& vector) {
@@ -59,4 +47,13 @@ void Coordinates::operator+=(Vector const& vector) {
     else if (y < 0) {
         y += yLimit;
     }
+}
+
+float Coordinates::calculateDistance(Coordinates& otherCoordinates) const {
+    auto delta = Vector{ 
+        min({ abs(x - otherCoordinates.x), abs(x - otherCoordinates.x - xLimit), abs(x - otherCoordinates.x + xLimit) }),
+        min({ abs(y - otherCoordinates.y), abs(y - otherCoordinates.y - yLimit), abs(y - otherCoordinates.y + yLimit) })
+    };
+    auto distance = sqrt( pow(delta.x, 2) + pow(delta.y,2) );
+    return distance;
 }

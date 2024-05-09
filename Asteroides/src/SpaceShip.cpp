@@ -1,7 +1,6 @@
 #include <iostream>
 #include "../include/SpaceShip.h"
-#include "../include/Vector.h"
-#include "../include/Coordinates.h"
+#include "../include/SpaceElement.h"
 
 using namespace std;
 
@@ -16,18 +15,20 @@ void SpaceShip::updateState() {
 }
 
 void SpaceShip::update(float duration) {
+
 	if (accelerationInProgress == true) {
 		speed += Vector::createFromAngle(ACCELERATION * duration, sprite.getRotation());
 	}
 	speed -= speed * FRICTION_COEFFICIENT * duration;
-	SpaceElement::update(duration);
-	
-	if (turnToRight == true) {
-		sprite.rotate(- ANGULAR_VELOCITY * duration);
-	}
 
 	if (turnToLeft == true) {
-		sprite.rotate(ANGULAR_VELOCITY * duration);
+		angularVelocity = -ANGULAR_VELOCITY;
+	} else if (turnToRight  == true) {
+		angularVelocity = ANGULAR_VELOCITY;
+	} else {
+		angularVelocity = 0;
 	}
+
+	SpaceElement::update(duration);
 }
 

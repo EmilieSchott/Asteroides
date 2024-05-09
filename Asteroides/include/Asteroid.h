@@ -5,6 +5,6 @@
 class Asteroid : public SpaceElement
 {
 	public:
-		Asteroid();
+	Asteroid();
 };
 

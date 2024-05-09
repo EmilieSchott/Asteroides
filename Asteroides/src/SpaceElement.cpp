@@ -2,6 +2,8 @@
 #include <string_view>
 #include <array>
 #include "../include/SpaceElement.h"
+#include "../include/Vector.h"
+#include "../include/Coordinates.h"
 
 using namespace std;
 
@@ -12,13 +14,13 @@ SpaceElement::SpaceElement(string_view const& imagePath) {
 	sprite.setTexture(texture);
 	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 	sprite.setPosition(position.getX(), position.getY());
-	speed = { 100,20 };
 }
 
 void SpaceElement::update(float duration) {
 	auto movement = speed * duration;
 	position += movement;
 	sprite.setPosition(position.getX(), position.getY());
+	sprite.rotate(angularVelocity * duration);
 }
 
 void SpaceElement::display(sf::RenderWindow& window) const {
@@ -33,4 +35,16 @@ void SpaceElement::display(sf::RenderWindow& window) const {
 		window.draw(sprite, transformation);
 	}
 
+}
+
+float SpaceElement::getRadius() const {
+	return sprite.getLocalBounds().height / 2.f;
+}
+
+void SpaceElement::testCollision(SpaceElement& otherElement) {
+	auto distance = position.calculateDistance(otherElement.position);
+	if (distance < getRadius() + otherElement.getRadius()) {
+		sprite.setColor(sf::Color::Red);
+		otherElement.sprite.setColor(sf::Color::Red);
+	}
 }
