@@ -1,9 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "../include/SpaceElement.h"
 #include "../include/Vector.h"
 #include "../include/Coordinates.h"
-#include "../include/SpaceElement.h"
 #include "../include/Explosion.h"
 
 class SpaceShip : public SpaceElement { // superclass should become MaterialElement

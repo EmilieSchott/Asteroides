@@ -18,10 +18,9 @@ int main()
     Coordinates::initializeSpace(WINDOW_WIDTH, WINDOW_HEIGHT);
     auto spaceShip = SpaceShip{ SPACESHIP_COLOR };
     auto asteroid = Asteroid{};
-    //auto asteroid2 = Asteroid{};
-    //auto asteroid3 = Asteroid{};
-    //auto spaceElements = array<SpaceElement*, 4>{&asteroid, &asteroid2, &asteroid3, &spaceShip};
-    auto spaceElements = array<SpaceElement*, 2>{&asteroid, &spaceShip};
+    auto asteroid2 = Asteroid{};
+    auto asteroid3 = Asteroid{};
+    auto spaceElements = array<SpaceElement*, 4>{&asteroid, &asteroid2, &asteroid3, &spaceShip};
     auto chrono = sf::Clock{};
 
     while(window.isOpen()) {
