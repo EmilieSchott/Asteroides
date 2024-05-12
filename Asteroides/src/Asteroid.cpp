@@ -17,4 +17,8 @@ Asteroid::Asteroid() : SpaceElement("resources/images/asteroid.png")
 	angularVelocity = angularVelocityDistribution(generator);
 }
 
+void Asteroid::reactToCollision() {
+
+}
+
 

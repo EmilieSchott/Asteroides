@@ -44,7 +44,6 @@ float SpaceElement::getRadius() const {
 void SpaceElement::testCollision(SpaceElement& otherElement) {
 	auto distance = position.calculateDistance(otherElement.position);
 	if (distance < getRadius() + otherElement.getRadius()) {
-		sprite.setColor(sf::Color::Red);
-		otherElement.sprite.setColor(sf::Color::Red);
+		reactToCollision();
 	}
 }

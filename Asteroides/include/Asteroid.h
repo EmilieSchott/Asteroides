@@ -1,10 +1,10 @@
 #pragma once
 #include "../include/SpaceElement.h"
 
-
-class Asteroid : public SpaceElement
+class Asteroid : public SpaceElement // superclass should become MaterialElement
 {
 	public:
-	Asteroid();
+		explicit Asteroid();
+		virtual void reactToCollision() override;
 };
 

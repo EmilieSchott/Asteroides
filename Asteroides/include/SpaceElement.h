@@ -7,16 +7,20 @@
 class SpaceElement
 {
 	public:
-		SpaceElement(std::string_view const& imagePath);
-		void display(sf::RenderWindow& window) const;
+		explicit SpaceElement(std::string_view const& imagePath);
+		SpaceElement(SpaceElement const& otherSpaceElement) = delete;
+		void operator=(SpaceElement const& otherSpaceElement) = delete;
+		virtual void display(sf::RenderWindow& window) const;
 		virtual void update(float duration);
+
 		float getRadius() const;
 		void testCollision(SpaceElement& otherElement);
+		virtual void reactToCollision() = 0; // to move to MaterialElement class
 
 	protected:
 		sf::Texture texture{};
 		sf::Sprite sprite{};
 		Coordinates position{};
-		Vector speed{ 0.f, 0.f };
-		float angularVelocity{};
+		Vector speed{ 0.f, 0.f }; // to move to MaterialElement class
+		float angularVelocity{}; // to move to MaterialElement class
 };

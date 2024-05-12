@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../include/SpaceShip.h"
 #include "../include/SpaceElement.h"
+#include "../include/Explosion.h"
 
 using namespace std;
 
@@ -15,20 +16,37 @@ void SpaceShip::updateState() {
 }
 
 void SpaceShip::update(float duration) {
+	if (destructed == false) {
+		if (accelerationInProgress == true) {
+			speed += Vector::createFromAngle(ACCELERATION * duration, sprite.getRotation());
+		}
+		speed -= speed * FRICTION_COEFFICIENT * duration;
 
-	if (accelerationInProgress == true) {
-		speed += Vector::createFromAngle(ACCELERATION * duration, sprite.getRotation());
-	}
-	speed -= speed * FRICTION_COEFFICIENT * duration;
-
-	if (turnToLeft == true) {
-		angularVelocity = -ANGULAR_VELOCITY;
-	} else if (turnToRight  == true) {
-		angularVelocity = ANGULAR_VELOCITY;
-	} else {
-		angularVelocity = 0;
+		if (turnToLeft == true) {
+			angularVelocity = -ANGULAR_VELOCITY;
+		} else if (turnToRight  == true) {
+			angularVelocity = ANGULAR_VELOCITY;
+		} else {
+			angularVelocity = 0;
+		}
 	}
 
 	SpaceElement::update(duration);
+	explosion.update(duration);
 }
 
+void SpaceShip::reactToCollision() {
+	if (destructed == false) {
+		destructed = true;
+		explosion.begin(position);
+	}
+}
+
+void SpaceShip::display(sf::RenderWindow& window) const {
+	if (destructed == false) {
+		SpaceElement::display(window);
+	}
+	else {
+		explosion.display(window);
+	}
+}
