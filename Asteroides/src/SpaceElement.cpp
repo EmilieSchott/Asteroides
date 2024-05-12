@@ -16,11 +16,16 @@ SpaceElement::SpaceElement(string_view const& imagePath) {
 	sprite.setPosition(position.getX(), position.getY());
 }
 
-void SpaceElement::update(float duration) {
+void SpaceElement::actualize(float duration) {
+	update(duration);
 	auto movement = speed * duration;
 	position += movement;
 	sprite.setPosition(position.getX(), position.getY());
 	sprite.rotate(angularVelocity * duration);
+}
+
+void SpaceElement::update(float duration) {
+
 }
 
 void SpaceElement::display(sf::RenderWindow& window) const {

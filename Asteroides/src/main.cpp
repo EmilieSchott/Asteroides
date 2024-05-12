@@ -33,7 +33,7 @@ int main()
         spaceShip.updateState();
         auto loopTime = chrono.restart().asSeconds();
         for (auto* spaceElement : spaceElements) {
-            spaceElement->update(loopTime);
+            spaceElement->actualize(loopTime);
         }
 
         for (auto* spaceElement : spaceElements) {

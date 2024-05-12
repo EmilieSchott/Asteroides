@@ -10,9 +10,12 @@ class SpaceShip : public SpaceElement { // superclass should become MaterialElem
 	public:
 	explicit SpaceShip(sf::Color const& color);
 	void updateState();
-	virtual void update(float duration) override;
+
 	virtual void reactToCollision() override;
 	virtual void display(sf::RenderWindow& window) const override;
+
+	protected:
+		virtual void update(float duration) override;
 
 	private:
 	bool accelerationInProgress{ false };

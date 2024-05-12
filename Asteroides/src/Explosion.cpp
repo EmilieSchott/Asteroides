@@ -17,7 +17,6 @@ void Explosion::update(float duration) {
 	if (age < LIFE_SPAN) {
 		sprite.setScale(age/LIFE_SPAN, age/LIFE_SPAN);
 	}
-	SpaceElement::update(duration);
 }
 
 void Explosion::display(sf::RenderWindow& window) const {

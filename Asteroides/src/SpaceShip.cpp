@@ -31,8 +31,7 @@ void SpaceShip::update(float duration) {
 		}
 	}
 
-	SpaceElement::update(duration);
-	explosion.update(duration);
+	explosion.actualize(duration);
 }
 
 void SpaceShip::reactToCollision() {

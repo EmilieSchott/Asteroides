@@ -8,16 +8,18 @@ class SpaceElement
 {
 	public:
 		explicit SpaceElement(std::string_view const& imagePath);
+		virtual ~SpaceElement() = default;
 		SpaceElement(SpaceElement const& otherSpaceElement) = delete;
 		void operator=(SpaceElement const& otherSpaceElement) = delete;
 		virtual void display(sf::RenderWindow& window) const;
-		virtual void update(float duration);
-
+		void actualize(float duration);
 		float getRadius() const;
 		void testCollision(SpaceElement& otherElement);
 		virtual void reactToCollision() = 0; // to move to MaterialElement class
 
 	protected:
+		virtual void update(float duration);
+
 		sf::Texture texture{};
 		sf::Sprite sprite{};
 		Coordinates position{};
