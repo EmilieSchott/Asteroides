@@ -13,13 +13,16 @@ class SpaceElement
 		void operator=(SpaceElement const& otherSpaceElement) = delete;
 		virtual void display(sf::RenderWindow& window) const;
 		void actualize(float duration);
+
+		static inline float isDestroyed(std::unique_ptr<SpaceElement>& spaceElement) { return spaceElement->destroyed; };
+
 		float getRadius() const;
 		void testCollision(SpaceElement& otherElement);
 		virtual void reactToCollision() = 0; // to move to MaterialElement class
 
 	protected:
 		virtual void update(float duration);
-
+		bool destroyed{ false };
 		sf::Texture texture{};
 		sf::Sprite sprite{};
 		Coordinates position{};

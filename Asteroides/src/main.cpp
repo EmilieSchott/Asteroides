@@ -1,10 +1,11 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <array>
+#include <memory>
 #include "../include/SpaceElement.h"
 #include "../include/SpaceShip.h"
 #include "../include/Coordinates.h"
 #include "../include/Asteroid.h"
+#include "../include/Space.h"
 
 using namespace std;
 
@@ -16,11 +17,8 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Asteroides");
     Coordinates::initializeSpace(WINDOW_WIDTH, WINDOW_HEIGHT);
-    auto spaceShip = SpaceShip{ SPACESHIP_COLOR };
-    auto asteroid = Asteroid{};
-    auto asteroid2 = Asteroid{};
-    auto asteroid3 = Asteroid{};
-    auto spaceElements = array<SpaceElement*, 4>{&asteroid, &asteroid2, &asteroid3, &spaceShip};
+    auto space = Space{};
+    auto gameBegun{ false };
     auto chrono = sf::Clock{};
 
     while(window.isOpen()) {
@@ -29,25 +27,21 @@ int main()
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-        }
-        spaceShip.updateState();
-        auto loopTime = chrono.restart().asSeconds();
-        for (auto* spaceElement : spaceElements) {
-            spaceElement->actualize(loopTime);
-        }
-
-        for (auto* spaceElement : spaceElements) {
-            for (auto* otherSpaceElement : spaceElements) {
-                if (spaceElement != otherSpaceElement) {
-                    spaceElement->testCollision(*otherSpaceElement);
-                }
+            if (event.type == sf::Event::KeyPressed && gameBegun == false) {
+                space.add(make_unique<SpaceShip>(space, SPACESHIP_COLOR));
+                space.add(make_unique<Asteroid>());
+                space.add(make_unique<Asteroid>());
+                space.add(make_unique<Asteroid>());
+                gameBegun = true;
             }
         }
 
+        space.actualize();
+        space.manageCollisions();
+        space.cleanUp();
+
         window.clear();
-        for (auto* spaceElement : spaceElements) {
-            spaceElement->display(window);
-        }
+        space.display(window);
         window.display();
     }
 

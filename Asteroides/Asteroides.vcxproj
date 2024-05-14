@@ -167,6 +167,7 @@
     <ClCompile Include="src\Asteroid.cpp" />
     <ClCompile Include="src\Coordinates.cpp" />
     <ClCompile Include="src\Explosion.cpp" />
+    <ClCompile Include="src\Space.cpp" />
     <ClCompile Include="src\SpaceElement.cpp" />
     <ClCompile Include="src\SpaceShip.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="include\Asteroid.h" />
     <ClInclude Include="include\Coordinates.h" />
     <ClInclude Include="include\Explosion.h" />
+    <ClInclude Include="include\Space.h" />
     <ClInclude Include="include\SpaceElement.h" />
     <ClInclude Include="include\SpaceShip.h" />
     <ClInclude Include="include\Vector.h" />

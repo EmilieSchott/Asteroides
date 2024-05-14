@@ -5,28 +5,27 @@
 #include "../include/Vector.h"
 #include "../include/Coordinates.h"
 #include "../include/Explosion.h"
+#include "../include/Space.h"
 
 class SpaceShip : public SpaceElement { // superclass should become MaterialElement
 	public:
-	explicit SpaceShip(sf::Color const& color);
-	void updateState();
+		explicit SpaceShip(Space& spaceReference, sf::Color const& color);
 
-	virtual void reactToCollision() override;
-	virtual void display(sf::RenderWindow& window) const override;
+		virtual void reactToCollision() override;
 
 	protected:
 		virtual void update(float duration) override;
 
 	private:
-	bool accelerationInProgress{ false };
-	bool turnToRight{ false };
-	bool turnToLeft{ false };
-	bool destructed{ false };
+		void updateState();
+		bool accelerationInProgress{ false };
+		bool turnToRight{ false };
+		bool turnToLeft{ false };
 
-	Explosion explosion{};
+		Space& space;
 
-	static constexpr float ACCELERATION{ 7000.f };
-	static constexpr float FRICTION_COEFFICIENT{ 2.f };
-	static constexpr float ANGULAR_VELOCITY{ 50 };
+		static constexpr float ACCELERATION{ 7000.f };
+		static constexpr float FRICTION_COEFFICIENT{ 2.f };
+		static constexpr float ANGULAR_VELOCITY{ 50 };
 };
 

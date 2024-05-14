@@ -5,7 +5,7 @@
 
 using namespace std;
 
-SpaceShip::SpaceShip(sf::Color const& color): SpaceElement("resources/images/spaceship.png") {
+SpaceShip::SpaceShip(Space& spaceReference, sf::Color const& color) : SpaceElement{ "resources/images/spaceship.png" }, space{ spaceReference } {
 	sprite.setColor(color);
 }
 
@@ -16,7 +16,8 @@ void SpaceShip::updateState() {
 }
 
 void SpaceShip::update(float duration) {
-	if (destructed == false) {
+	updateState();
+	if (destroyed == false) {
 		if (accelerationInProgress == true) {
 			speed += Vector::createFromAngle(ACCELERATION * duration, sprite.getRotation());
 		}
@@ -30,22 +31,12 @@ void SpaceShip::update(float duration) {
 			angularVelocity = 0;
 		}
 	}
-
-	explosion.actualize(duration);
 }
 
 void SpaceShip::reactToCollision() {
-	if (destructed == false) {
-		destructed = true;
-		explosion.begin(position);
+	if (destroyed == false) {
+		destroyed = true;
+		space.add(std::make_unique<Explosion>(position));
 	}
 }
 
-void SpaceShip::display(sf::RenderWindow& window) const {
-	if (destructed == false) {
-		SpaceElement::display(window);
-	}
-	else {
-		explosion.display(window);
-	}
-}

@@ -1,27 +1,16 @@
 #include "../include/Explosion.h"
 
-Explosion::Explosion() : SpaceElement{ "resources/images/explosion.png" } {
-
-}
-
-void Explosion::begin(Coordinates const& spaceShipPosition) {
+Explosion::Explosion(Coordinates const& spaceShipPosition) : SpaceElement{ "resources/images/explosion.png" } {
 	position = spaceShipPosition;
-	begun = true;
 }
+
 
 void Explosion::update(float duration) {
-	if (begun == true) {
-		age += duration; 
-	}
-
+	age += duration; 
 	if (age < LIFE_SPAN) {
 		sprite.setScale(age/LIFE_SPAN, age/LIFE_SPAN);
-	}
-}
-
-void Explosion::display(sf::RenderWindow& window) const {
-	if (age < LIFE_SPAN) {
-		SpaceElement::display(window);
+	} else {
+		destroyed = true;
 	}
 }
 

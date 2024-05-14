@@ -54,6 +54,6 @@ float Coordinates::calculateDistance(Coordinates& otherCoordinates) const {
         min({ abs(x - otherCoordinates.x), abs(x - otherCoordinates.x - xLimit), abs(x - otherCoordinates.x + xLimit) }),
         min({ abs(y - otherCoordinates.y), abs(y - otherCoordinates.y - yLimit), abs(y - otherCoordinates.y + yLimit) })
     };
-    auto distance = sqrt( pow(delta.x, 2) + pow(delta.y,2) );
+    auto distance = static_cast<float>(sqrt(pow(delta.x, 2) + pow(delta.y, 2)));
     return distance;
 }
