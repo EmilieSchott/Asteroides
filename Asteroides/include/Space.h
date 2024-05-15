@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include <memory>
 #include "../include/SpaceElement.h"
 
 class Space
@@ -17,6 +16,7 @@ class Space
 
 	private :
 		std::vector<std::unique_ptr<SpaceElement>> spaceElements{};
+		std::vector<std::unique_ptr<SpaceElement>> newSpaceElements{};
 		sf::Clock chrono{};
 };
 

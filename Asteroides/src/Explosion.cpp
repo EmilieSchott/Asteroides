@@ -1,7 +1,7 @@
 #include "../include/Explosion.h"
 
-Explosion::Explosion(Coordinates const& spaceShipPosition) : SpaceElement{ "resources/images/explosion.png" } {
-	position = spaceShipPosition;
+Explosion::Explosion(Coordinates const& otherObjectPosition) : SpaceElement{ "resources/images/explosion.png" } {
+	position = otherObjectPosition;
 }
 
 
@@ -14,6 +14,6 @@ void Explosion::update(float duration) {
 	}
 }
 
-void Explosion::reactToCollision() { // To delete when add MaterialElement Class
+void Explosion::reactToCollision(TypeElement otherType) { // To delete when add MaterialElement Class
 
 }

@@ -1,18 +1,22 @@
 #include "../include/Space.h"
+#include "../include/SpaceElement.h"
 #include <vector>
+#include <memory>
+
+using namespace std;
 
 Space::Space() {
 
 }
 
-void Space::add(std::unique_ptr<SpaceElement> spaceElement) {
-	spaceElements.push_back(std::move(spaceElement));
+void Space::add(unique_ptr<SpaceElement> spaceElement) {
+    newSpaceElements.push_back(move(spaceElement));
 }
 
 void Space::actualize() {
     auto loopTime = chrono.restart().asSeconds();
-    for (auto& spaceElement : spaceElements) {
-        spaceElement->actualize(loopTime);
+    for (auto i{ 0u }; i<spaceElements.size(); i++) {
+        spaceElements[i]->actualize(loopTime);
     }
 }
 
@@ -33,6 +37,10 @@ void Space::display(sf::RenderWindow& window) const {
 }
 
 void Space::cleanUp() {
-    auto firstElementToCleanUp = std::remove_if(std::begin(spaceElements), std::end(spaceElements), SpaceElement::isDestroyed);
-    spaceElements.erase(firstElementToCleanUp, std::end(spaceElements));
+    auto firstElementToCleanUp = remove_if(begin(spaceElements), end(spaceElements), SpaceElement::isDestroyed);
+    spaceElements.erase(firstElementToCleanUp, end(spaceElements));
+    for (auto& newSpaceElement : newSpaceElements) {
+        spaceElements.push_back(move(newSpaceElement));
+    }
+    newSpaceElements.clear();
 }

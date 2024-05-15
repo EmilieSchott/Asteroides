@@ -4,6 +4,8 @@
 #include "../include/Vector.h"
 #include "../include/Coordinates.h"
 
+enum class TypeElement {SPACESHIP, ASTEROID, MISSILE, OTHER};
+
 class SpaceElement
 {
 	public:
@@ -18,12 +20,12 @@ class SpaceElement
 
 		float getRadius() const;
 		void testCollision(SpaceElement& otherElement);
-		virtual void reactToCollision() = 0; // to move to MaterialElement class
+		virtual void reactToCollision(TypeElement otherType) = 0; // to move to MaterialElement class
 
 	protected:
 		virtual void update(float duration);
+		TypeElement type{TypeElement::OTHER};
 		bool destroyed{ false };
-		sf::Texture texture{};
 		sf::Sprite sprite{};
 		Coordinates position{};
 		Vector speed{ 0.f, 0.f }; // to move to MaterialElement class

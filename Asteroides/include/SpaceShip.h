@@ -6,12 +6,13 @@
 #include "../include/Coordinates.h"
 #include "../include/Explosion.h"
 #include "../include/Space.h"
+#include "../include/Missile.h"
 
 class SpaceShip : public SpaceElement { // superclass should become MaterialElement
 	public:
 		explicit SpaceShip(Space& spaceReference, sf::Color const& color);
 
-		virtual void reactToCollision() override;
+		virtual void reactToCollision(TypeElement otherType) override;
 
 	protected:
 		virtual void update(float duration) override;
@@ -23,6 +24,7 @@ class SpaceShip : public SpaceElement { // superclass should become MaterialElem
 		bool turnToLeft{ false };
 
 		Space& space;
+		sf::Clock lastShot{};
 
 		static constexpr float ACCELERATION{ 7000.f };
 		static constexpr float FRICTION_COEFFICIENT{ 2.f };

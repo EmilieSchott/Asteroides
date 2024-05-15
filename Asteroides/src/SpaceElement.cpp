@@ -4,14 +4,12 @@
 #include "../include/SpaceElement.h"
 #include "../include/Vector.h"
 #include "../include/Coordinates.h"
+#include "../include/ResourcesManager.h"
 
 using namespace std;
 
 SpaceElement::SpaceElement(string_view const& imagePath) {
-	if (!texture.loadFromFile(imagePath.data())) {
-		cerr << "L'image " << imagePath << " n'a pas ete correctement chargee";
-	}
-	sprite.setTexture(texture);
+	sprite.setTexture(ResourcesManager::getResource(imagePath));
 	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 	sprite.setPosition(position.getX(), position.getY());
 }
@@ -43,12 +41,12 @@ void SpaceElement::display(sf::RenderWindow& window) const {
 }
 
 float SpaceElement::getRadius() const {
-	return sprite.getLocalBounds().height / 2.f;
+	return sprite.getGlobalBounds().height / 2.4f; //getGlobalBounds takes in account the actual sprite scale
 }
 
 void SpaceElement::testCollision(SpaceElement& otherElement) {
 	auto distance = position.calculateDistance(otherElement.position);
 	if (distance < getRadius() + otherElement.getRadius()) {
-		reactToCollision();
+		reactToCollision(otherElement.type);
 	}
 }

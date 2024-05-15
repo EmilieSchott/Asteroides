@@ -29,20 +29,21 @@ int main()
             }
             if (event.type == sf::Event::KeyPressed && gameBegun == false) {
                 space.add(make_unique<SpaceShip>(space, SPACESHIP_COLOR));
-                space.add(make_unique<Asteroid>());
-                space.add(make_unique<Asteroid>());
-                space.add(make_unique<Asteroid>());
+                space.add(make_unique<Asteroid>(space));
+                space.add(make_unique<Asteroid>(space));
+                space.add(make_unique<Asteroid>(space));
                 gameBegun = true;
             }
         }
 
         space.actualize();
         space.manageCollisions();
-        space.cleanUp();
 
         window.clear();
         space.display(window);
         window.display();
+
+        space.cleanUp();
     }
 
     return 0;
