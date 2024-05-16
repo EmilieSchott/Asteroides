@@ -15,12 +15,16 @@ void Space::add(unique_ptr<SpaceElement> spaceElement) {
 
 void Space::actualize() {
     auto loopTime = chrono.restart().asSeconds();
-    for (auto i{ 0u }; i<spaceElements.size(); i++) {
-        spaceElements[i]->actualize(loopTime);
+    // spaceElements is passed by reference in for struture because it's a unique pointer and couldn't be copied :
+    for (auto& spaceElement : spaceElements) {
+        spaceElement->actualize(loopTime);
     }
 }
 
 void Space::manageCollisions() {
+    /* Use a classic for structure here beacause testCollision() add new elements in vector array spaceElements 
+    if a base ranged for structure is use, its iterator will be lost with the new elements addition and 
+    could cause some bugs */
     for (auto i{ 0u }; i < spaceElements.size(); i++) {
         for (auto j{ 0u }; j < spaceElements.size(); j++) {
             if (i != j) {
@@ -31,6 +35,7 @@ void Space::manageCollisions() {
 }
 
 void Space::display(sf::RenderWindow& window) const {
+    // spaceElement is passed by reference in for struture because it's a unique pointer and couldn't be copied :
     for (auto& spaceElement : spaceElements) {
         spaceElement->display(window);
     }
