@@ -7,10 +7,11 @@
 #include "../include/Explosion.h"
 #include "../include/Space.h"
 #include "../include/Missile.h"
+#include "../include/Game.h"
 
 class SpaceShip : public SpaceElement { // superclass should become MaterialElement
 	public:
-		explicit SpaceShip(Space& spaceReference, sf::Color const& color);
+		explicit SpaceShip(Game& p_game, Space& p_space, sf::Color const& color);
 
 		virtual void reactToCollision(TypeElement otherType) override;
 
@@ -23,6 +24,7 @@ class SpaceShip : public SpaceElement { // superclass should become MaterialElem
 		bool turnToRight{ false };
 		bool turnToLeft{ false };
 
+		Game& game;
 		Space& space;
 		sf::Clock lastShot{};
 

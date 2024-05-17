@@ -3,9 +3,12 @@
 #include "../include/SpaceElement.h"
 #include "../include/Explosion.h"
 
+
 using namespace std;
 
-SpaceShip::SpaceShip(Space& spaceReference, sf::Color const& color) : SpaceElement{ "resources/images/spaceship.png" }, space{ spaceReference } {
+SpaceShip::SpaceShip(Game& p_game, Space& p_space, sf::Color const& color) : 
+	SpaceElement{ "resources/images/spaceship.png" }, game{ p_game }, space{ p_space }
+{
 	type = TypeElement::SPACESHIP;
 	sprite.setColor(color);
 }
@@ -41,6 +44,7 @@ void SpaceShip::update(float duration) {
 void SpaceShip::reactToCollision(TypeElement otherType) {
 	if (otherType == TypeElement::ASTEROID) {
 		destroyed = true;
+		game.terminate();
 		space.add(std::make_unique<Explosion>(position));
 	}
 }
