@@ -42,10 +42,18 @@ void Space::display(sf::RenderWindow& window) const {
 }
 
 void Space::cleanUp() {
+    if (toClear == true) {
+        spaceElements.clear();
+        toClear = false;
+    }
     auto firstElementToCleanUp = remove_if(begin(spaceElements), end(spaceElements), SpaceElement::isDestroyed);
     spaceElements.erase(firstElementToCleanUp, end(spaceElements));
     for (auto& newSpaceElement : newSpaceElements) {
         spaceElements.push_back(move(newSpaceElement));
     }
     newSpaceElements.clear();
+}
+
+void Space::clear() {
+    toClear = true;
 }

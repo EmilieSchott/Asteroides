@@ -167,6 +167,7 @@
     <ClCompile Include="src\Asteroid.cpp" />
     <ClCompile Include="src\Coordinates.cpp" />
     <ClCompile Include="src\Explosion.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Missile.cpp" />
     <ClCompile Include="src\ResourcesManager.cpp" />
     <ClCompile Include="src\Space.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="include\Asteroid.h" />
     <ClInclude Include="include\Coordinates.h" />
     <ClInclude Include="include\Explosion.h" />
+    <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Missile.h" />
     <ClInclude Include="include\ResourcesManager.h" />
     <ClInclude Include="include\Space.h" />

@@ -13,10 +13,11 @@ class Space
 		void manageCollisions();
 		void display(sf::RenderWindow& window) const;
 		void cleanUp();
+		void clear();
 
 	private :
 		std::vector<std::unique_ptr<SpaceElement>> spaceElements{};
 		std::vector<std::unique_ptr<SpaceElement>> newSpaceElements{};
 		sf::Clock chrono{};
+		bool toClear;
 };
-
