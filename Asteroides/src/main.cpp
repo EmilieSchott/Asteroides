@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <exception>
 #include "../include/SpaceElement.h"
 #include "../include/Coordinates.h"
 #include "../include/Space.h"
@@ -18,25 +19,30 @@ int main()
     auto game = Game{ space };
 
     while(window.isOpen()) {
-        auto event = sf::Event{};
-        while(window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
+        try {
+            auto event = sf::Event{};
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
+                }
+                if (event.type == sf::Event::KeyPressed && game.isRunning() == false) {
+                    game.start();
+                }
             }
-            if (event.type == sf::Event::KeyPressed && game.isRunning() == false) {
-                game.start();
-            }
+
+            space.actualize();
+            space.manageCollisions();
+
+            window.clear();
+            space.display(window);
+            game.display(window);
+            window.display();
+
+            space.cleanUp();
+
+        } catch (std::exception const& exception) {
+            game.initializeException(exception);
         }
-
-        space.actualize();
-        space.manageCollisions();
-
-        window.clear();
-        space.display(window);
-        game.display(window);
-        window.display();
-
-        space.cleanUp();
     }
 
     return 0;
