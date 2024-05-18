@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string_view>
 #include <array>
+#include <SFML/Graphics.hpp>
 #include "../include/SpaceElement.h"
 #include "../include/Vector.h"
 #include "../include/Coordinates.h"
@@ -9,7 +10,7 @@
 using namespace std;
 
 SpaceElement::SpaceElement(string_view const& imagePath) {
-	sprite.setTexture(ResourcesManager::getResource(imagePath));
+	sprite.setTexture(ResourcesManager<sf::Texture>::getResource(imagePath));
 	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 	sprite.setPosition(position.getX(), position.getY());
 }

@@ -5,6 +5,7 @@
 #include "../include/font.h"
 #include <iostream>
 #include <exception>
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ Game::Game(Space& p_space) : space{ p_space } {
 	// this exception shouldn't be catch to make the program crash if trigerred.
 	if (!font.loadFromMemory(Air_Americana_ttf, Air_Americana_ttf_size)) throw std::runtime_error{ "Police introuvable !" };
 	try {
-		welcomeSprite.setTexture(ResourcesManager::getResource("resources/images/welcome.png"));
+		welcomeSprite.setTexture(ResourcesManager<sf::Texture>::getResource("resources/images/welcome.png"));
 	}catch (std::exception const& exception) {
 		initializeException(exception);
 	}
