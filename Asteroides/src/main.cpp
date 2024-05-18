@@ -33,6 +33,7 @@ int main()
 
         window.clear();
         space.display(window);
+        game.display(window);
         window.display();
 
         space.cleanUp();

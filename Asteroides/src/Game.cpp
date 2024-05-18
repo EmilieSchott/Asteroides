@@ -1,6 +1,7 @@
 #include "../include/Game.h"
 #include "../include/SpaceShip.h"
 #include "../include/Asteroid.h"
+#include "../include/ResourcesManager.h"
 #include <iostream>
 
 using namespace std;
@@ -8,7 +9,7 @@ using namespace std;
 const sf::Color SPACESHIP_COLOR{ 128, 255, 128 };
 
 Game::Game(Space& p_space) : space{ p_space } {
-
+	welcomeSprite.setTexture(ResourcesManager::getResource("resources/images/welcome.png"));
 }
 
 void Game::start() {
@@ -22,4 +23,10 @@ void Game::start() {
 void Game::terminate() {
 	running = false;
 	space.clear();
+}
+
+void Game::display(sf::RenderWindow& window) const {
+	if (running == false) {
+		window.draw(welcomeSprite);
+	}
 }
