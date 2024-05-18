@@ -27,11 +27,11 @@ Asteroid::Asteroid(Space& p_space, Asteroid* parent) : SpaceElement("resources/i
 void Asteroid::reactToCollision(TypeElement otherType) {
 	if (otherType == TypeElement::MISSILE) {
 		destroyed = true;
-		space.add(make_unique<Explosion>(position));
 		if (sprite.getScale().x > 0.1) {
 			space.add(make_unique<Asteroid>(space, this));
 			space.add(make_unique<Asteroid>(space, this));
 		}
+		space.add(make_unique<Explosion>(position));
 	}
 }
 

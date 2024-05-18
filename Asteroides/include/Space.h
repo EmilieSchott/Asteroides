@@ -14,6 +14,7 @@ class Space
 		void display(sf::RenderWindow& window) const;
 		void cleanUp();
 		void clear();
+		inline bool isEmpty() { return spaceElements.empty() && newSpaceElements.empty(); };
 
 	private :
 		std::vector<std::unique_ptr<SpaceElement>> spaceElements{};

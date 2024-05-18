@@ -35,7 +35,7 @@ void Game::terminate() {
 }
 
 void Game::display(sf::RenderWindow& window) const {
-	if (running == false) {
+	if (running == false && space.isEmpty()) {
 		window.draw(welcomeSprite);
 	}
 
