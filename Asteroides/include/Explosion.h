@@ -1,5 +1,6 @@
 #pragma once
 #include "../include/SpaceElement.h"
+#include <SFML/Audio.hpp>
 
 class Explosion : public SpaceElement 
 {
@@ -12,7 +13,7 @@ class Explosion : public SpaceElement
 
 	private:
 		float age{};
-
+		sf::Sound sound;
 		static constexpr float LIFE_SPAN{0.1f};
 };
 
