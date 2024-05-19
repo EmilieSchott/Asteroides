@@ -7,6 +7,7 @@
 #include <exception>
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <fstream>
 
 using namespace std;
 using namespace string_literals;
@@ -19,6 +20,11 @@ Game::Game(Space& p_space) : space{ p_space } {
 	scoreText.setFont(font);
 	scoreText.move(0, 30);
 	bestScoreText.setFont(font);
+	auto file = ifstream{ "bestScore.txt" };
+	if (file.is_open()) {
+		file >> bestScore;
+	}
+	file.close();
 	updateBestScoreText();
 	try {
 		welcomeSprite.setTexture(ResourcesManager<sf::Texture>::getResource("resources/images/welcome.png"));
@@ -42,6 +48,13 @@ void Game::terminate() {
 	if (score > bestScore) {
 		bestScore = score;
 		updateBestScoreText();
+		auto file = ofstream{ "bestScore.txt" };
+		if (file.is_open()) {
+			file << bestScore;
+		} else {
+			throw runtime_error("Impossible d'ouvrir le fichier bestScore en écriture.");
+		}
+		file.close();
 	}
 	space.clear();
 }
