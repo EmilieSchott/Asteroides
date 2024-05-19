@@ -2,12 +2,13 @@
 #include <random>
 #include "../include/Asteroid.h"
 #include "../include/SpaceElement.h"
-#include "../include/Space.h"
 #include "../include/Explosion.h"
 
 using namespace std;
 
-Asteroid::Asteroid(Space& p_space, Asteroid* parent) : SpaceElement("resources/images/asteroid.png"), space{ p_space } {
+Asteroid::Asteroid(Game& p_game, Space& p_space, Asteroid* parent) : 
+	SpaceElement("resources/images/asteroid.png"), game{p_game}, space { p_space } 
+{
 	type = TypeElement::ASTEROID;
 	auto generator = random_device();
 	auto positionDistribution = uniform_real_distribution<float>{ -150, 150 }; // cannot spawn in the middle of the space
@@ -27,9 +28,10 @@ Asteroid::Asteroid(Space& p_space, Asteroid* parent) : SpaceElement("resources/i
 void Asteroid::reactToCollision(TypeElement otherType) {
 	if (otherType == TypeElement::MISSILE) {
 		destroyed = true;
+		game.addPoints(sprite.getScale().x * 100);
 		if (sprite.getScale().x > 0.1) {
-			space.add(make_unique<Asteroid>(space, this));
-			space.add(make_unique<Asteroid>(space, this));
+			space.add(make_unique<Asteroid>(game, space, this));
+			space.add(make_unique<Asteroid>(game, space, this));
 		}
 		space.add(make_unique<Explosion>(position));
 	}
