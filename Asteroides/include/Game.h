@@ -17,10 +17,13 @@ class Game
 
 	private:
 		void updateScoreText();
+		void updateBestScoreText();
 		Space& space;
 		bool running{ false };
 		int score{};
+		int bestScore{};
 		sf::Text scoreText{};
+		sf::Text bestScoreText{};
 		sf::Sprite welcomeSprite{};
 		sf::Font font{};
 		std::unique_ptr<sf::Text> exceptionText{ nullptr };
