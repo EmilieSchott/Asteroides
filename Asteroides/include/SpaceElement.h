@@ -16,11 +16,7 @@ class SpaceElement
 		virtual void display(sf::RenderWindow& window) const;
 		void actualize(float duration);
 
-		/* isDestroyed is used in remove_if() arguments list. (see src/Space.cpp file)
-		For this, isDestroyed should have in argument the same type, or a reference for an object of the same type 
-		that the one used by the array in remove_if() argument.
-		Here, it's a unique pointer so passing by reference is mandatory */
-		static inline float isDestroyed(std::unique_ptr<SpaceElement>& spaceElement) { return spaceElement->destroyed; };
+		inline bool isDestroyed() { return destroyed; };
 
 		float getRadius() const;
 		void testCollision(SpaceElement& otherElement);

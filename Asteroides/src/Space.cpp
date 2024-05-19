@@ -45,8 +45,12 @@ void Space::cleanUp() {
     if (toClear == true) {
         spaceElements.clear();
         toClear = false;
-    }
-    auto firstElementToCleanUp = remove_if(begin(spaceElements), end(spaceElements), SpaceElement::isDestroyed);
+    }/*
+    auto firstElementToCleanUp = remove_if(begin(spaceElements), end(spaceElements), SpaceElement::isDestroyed);*/
+    auto firstElementToCleanUp = remove_if(
+        begin(spaceElements), end(spaceElements), 
+        [] (auto& spaceElement) {return spaceElement->isDestroyed();} // create a lambda to determine if spaceElement should be destroyed
+    );
     spaceElements.erase(firstElementToCleanUp, end(spaceElements));
     for (auto& newSpaceElement : newSpaceElements) {
         spaceElements.push_back(move(newSpaceElement));
